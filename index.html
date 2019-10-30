@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+		body {
+			font-family: 'Palatino';
+			font-size: 12px;
+		}
+
+		hr {
+			border-top: 1px solid #00b2ff29;
+		}
+
+		h1 { 
+			font-size: 2em;
+		}
+	
+		h2{
+			font-size: 1.5em;
+		}
+
+		ul {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+
+		ul li{
+			text-decoration: underline;
+			cursor: pointer;
+		}
+
+		li {
+			margin-bottom: 1em;
+			margin-left: 2em;
+			font-size: 1.5em;
+		}
+
+		button {
+			font-size: 1.5em;
+		    letter-spacing: .25em;
+		    background-color: #a7d4fb66;
+		}
+
+		.poems {
+			display: none;
+		}
+	
+		.poems h2 {
+			margin-top: 2em;
+		}
+
+		.controls {
+			display: none;
+			width: 25%;
+			justify-content: space-between;
+			margin-left: 2.5em;
+			padding: 1em 0;
+		}
+		.playArea {
+			padding: 0 0 2em 0;
+			width: 36%;
+		    text-align: justify;
+		    margin: 0 2em;
+		    font-size: 1.5em;
+		    line-height: 1.8em;
+		}
+
+		#waveform {
+			width: 100%;
+			display: block;
+			background-color: black;
+		}
+
+		@media (max-width: 890px) {
+			
+			li {
+				margin-left: 0;
+			}
+
+			.playArea,
+			nav {
+				text-align: center;
+			}
+
+		   .playArea,
+		   .controls {
+				width: 80%;
+		   }
+		   
+		}
+
+
+	</style>
+	<title>Real Hal's poetry</title>
+</head>
+<body>
+	<main>
+		<nav>
+			<h1>Choose a poem to read</h1>
+			<ul>
+				<li><div id="crumbs">Crumbs</a></li>
+				<li><div id="newWords">Learning New Words</a></li>
+			</ul>
+
+			<div class="controls">
+					<button id="readPoem">Read Poem</button>
+					<button id="stopRecord">Stop</button>
+			</div>
+			<hr/>
+		</nav>
+		<div id="waveform"></div>
+		<audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
+
+		<section class="poems">
+			<div id="poemUno">
+				<h2>Crumbs</h2>
+				Don’t eat any more food in your room,
+				Mother said. You’ll get more bugs.
+				They depend on people like you.
+				Otherwise, they would starve.
+				But who do you want to make happy,
+				your mother or a bunch of ants?
+				What have they done for you?
+				Nothing. They have no feelings.
+
+				They’ll eat your candy. Yet
+				you treat them better than you treat me.
+				You keep feeding them.
+				But you never offer me anything.
+			</div>
+			<div id="poemDuo">
+				<h2>Learning New Words</h2>
+				My Parkinson’s medicine makes
+				my arms shake. The medical
+				term is dyskinesia. That’s
+				one of the benefits of the disease
+				–
+				you learn new words. You
+				also learn new meanings for
+				old words. When I say my
+				windows are wide open,
+				I’m not referring to the computer
+				or those in a house. It means
+				my medication is working.
+				A half closed window means
+				the medicine is wearing down.
+				A closed window means everything
+				I do will now become a struggle.
+
+				I just pray the window won’t get stuck.
+			</div>
+		</section>
+		<section>
+			<div id="poemNow">
+				<div class="playArea"></div>
+			</div>
+		</section>
+	</main>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/wavesurfer.js"></script>
+<script src="js/wavesurfer.js"></script>
+
+ <script type="text/javascript">
+		$('#crumbs').on('touchend click', function(e) {
+			$('.playArea').html('');
+			$('.playArea').html($('#poemUno').html());
+			$('.playArea').show();
+			$('.controls').show();
+		});
+		$('#newWords').on('touchend click',function(e) {
+			$('.playArea').html('');
+			$('.playArea').html($('#poemDuo').html());
+			$('.playArea').show();
+			$('.controls').show();
+		});
+
+
+		// // start the microphone
+		// wavesurfer.microphone.start();
+
+		var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+		var wavesurfer, context, processor;
+
+		 var constraints = {
+	         audio: true,
+	         video: false
+	    }
+
+		   $('#readPoem').on('touchend click', function(e) {
+			/** BEGIN Waveform */
+	           if (isSafari) {
+	               
+	                var AudioContext =
+	                    window.AudioContext || window.webkitAudioContext;
+	                context = new AudioContext();
+	                processor = context.createScriptProcessor(1024, 1, 1);
+	            }
+
+	            if (wavesurfer === undefined) {
+
+					 wavesurfer = WaveSurfer.create({
+					  container     : '#waveform',
+					  interact      : false,
+					  cursorWidth   : 0,
+					  waveColor: 'yellow',
+	    			  progressColor: 'purple',
+	    			  minPxPerSec: 23,
+	    			  barWidth: 2,
+	    			  audioContext: context || null,
+	                  audioScriptProcessor: processor || null,
+					  plugins: [
+					    WaveSurfer.microphone.create()
+					  ]
+					});
+				}
+	
+
+				wavesurfer.microphone.on('deviceReady', function(stream) {
+				    console.log('Device ready!', stream);
+				});
+				wavesurfer.microphone.on('deviceError', function(code) {
+				    console.log('Device error: ' + code);
+				});
+
+				wavesurfer.microphone.start();
+		
+			
+		});
+
+	
+
+		$('#stopRecord').on('touchend click', function(e) {
+			wavesurfer.microphone.stop();
+			$('wave').remove();
+			wavesurfer = null;
+		});
+
+		// pause rendering
+		//wavesurfer.microphone.pause();
+
+		// resume rendering
+		//wavesurfer.microphone.play();
+
+		// stop visualization and disconnect microphone
+		//wavesurfer.microphone.stopDevice();
+
+		// same as stopDevice() but also clears the wavesurfer canvas
+		//wavesurfer.microphone.stop();
+
+		// destroy the plugin
+		//wavesurfer.microphone.destroy();
+
+				/** END Waveform */
+
+
+	</script>
+</body>
+</html>
