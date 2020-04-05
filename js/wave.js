@@ -354,6 +354,7 @@ function () {
   }, {
     key: "setFillStyles",
     value: function setFillStyles(waveColor, progressColor) {
+
       this.waveCtx.fillStyle = waveColor;
 
       if (this.hasProgressCanvas) {
