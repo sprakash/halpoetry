@@ -1,12 +1,14 @@
 @font-face {
   font-family: halFont;
-  src: url(../font/teko/Teko-Light.ttf); }
+  src: url(../font/teko/Teko-Light.ttf) format('truetype'); 
+}
 
 body {
   font-family: halFont;
   font-size: 12px;
   background-color: black;
-  color: whitesmoke; }
+  color: whitesmoke; 
+}
 
 nav {
   font-size: 4em;
