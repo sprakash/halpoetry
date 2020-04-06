@@ -1,6 +1,6 @@
 @font-face {
   font-family: halFont;
-  src: url(font/teko/Teko-Light.ttf); }
+  src: url(../font/teko/Teko-Light.ttf); }
 
 body {
   font-family: halFont;
