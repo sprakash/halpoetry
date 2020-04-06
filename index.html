@@ -201,20 +201,26 @@
 
 		function chillWaves() {
 			wavesurfer.microphone.stop();
-				$('wave').remove();
+				//$('wave').remove();
 				$('#btn-start-recording').css({'visibility':'visible'});
 				$('#btn-stop-recording').css({'visibility':'hidden'});
-				$('#waveform').removeClass('borderism');
+				//$('#waveform').removeClass('borderism');
 		}
 
 		function captureCamera(callback) {
-			navigator.mediaDevices.getUserMedia({audio: true, video: true}).then(function(camera){
+			navigator.getWebcam = (navigator.getUserMedia || navigator.webKitGetUserMedia || navigator.moxGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.mediaDevices.getUserMedia);
 
-				callback(camera);
-			}).catch(function(error) {
-				alert('Unable to capture your camera. Please make sure you are running this on the Chrome browser');
-					console.error(error);
-			});
+
+			// navigator.getWebcam({audio: true, video: true}).then(function(camera){
+			// 	callback(camera);
+			// }).catch(function(error) {
+			// 	alert('Unable to capture your camera. Please make sure you are running this on the Chrome browser');
+			// 		console.error(error);
+			// });
+
+			// navigator.getUserMedia({audio:true, video:true}, function(camera){callback(camera)},function (){console.warn("Error getting audio stream from getUserMedia")} );
+
+			navigator.getUserMedia({audio:true, video:true}, function(camera){callback(camera)},function (){console.warn("Error getting audio stream from getUserMedia")} );
 		}
 
 		function stopRecordingCallback() {
@@ -253,6 +259,7 @@
 		document.getElementById('btn-stop-recording').onclick = function() {
 
 			this.disabled = true;
+			document.getElementById('btn-start-recording').disabled = false;
 			recorder.stopRecording(stopRecordingCallback);
 			//chillWaves();
 		};
