@@ -59,6 +59,10 @@ $base-fontColor: whitesmoke;
     	 color: steelblue;
 		}
 
+		video {
+			width: 100%;
+		}
+
 		#content {
 			padding-top: 5em;
 			display: flex;
@@ -83,6 +87,8 @@ $base-fontColor: whitesmoke;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-evenly;
+			width: 100%;
+		
 		}
 		.poemText {
 			  height: 250px;
@@ -117,6 +123,7 @@ $base-fontColor: whitesmoke;
 				&-active {
 					display: flex !important;
 					flex-direction: row;
+					justify-content: space-between;
 				}
 		}
 
