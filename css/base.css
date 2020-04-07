@@ -133,3 +133,6 @@ video {
   .playArea,
   .controls {
     width: 80%; } }
+
+#btn-save-recording {
+  visibility: hidden; }

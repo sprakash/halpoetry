@@ -76,7 +76,8 @@
 								<section class="controls">
 									<section id="poemReadStop">
 										<button id="btn-start-recording">Read Poem</button>
-										<button id="btn-stop-recording">Stop</button>
+										<button id="btn-stop-recording">Stop Recording</button>
+										<button id="btn-save-recording">Save Recording</button>
 									</section>
 
 									<section>
@@ -239,12 +240,12 @@
 			video.src = URL.createObjectURL(recorder.getBlob());
 
 			recorder.camera.stop();
-			
-
-			RecordRTC.invokeSaveAsDialog(recorder.getBlob());
-			
 			recorder.destroy();
 			recorder = null;
+		}
+
+		function saveRecordingCallback() {
+			RecordRTC.invokeSaveAsDialog(recorder.getBlob());
 		}
 
 		var recorder; // globally accessible
@@ -252,6 +253,7 @@
 		document.getElementById('btn-start-recording').onclick = function() {
 
 			document.getElementById('poemReadStop').style.width = '100%';
+			document.getElementById('btn-save-recording').style.visibility = 'hidden';
 
 			this.disabled = true; 
 			captureCamera(function(camera){
@@ -276,6 +278,7 @@
 			this.disabled = true;
 			document.getElementById('btn-start-recording').disabled = false;
 			document.getElementById('btn-start-recording').style.visibility = 'visible';
+			document.getElementById('btn-save-recording').style.visibility = 'visible';
 			recorder.stopRecording(stopRecordingCallback);
 			//chillWaves();
 		};
