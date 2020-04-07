@@ -72,7 +72,7 @@ video {
   width: 40%; }
 
 .poemText {
-  height: 250px;
+  height: 150px;
   overflow-y: scroll; }
   .poemText div {
     padding: 0 1em 0 0; }
