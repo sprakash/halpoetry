@@ -243,7 +243,7 @@
 		}
 
 		function saveRecordingCallback() {
-			RecordRTC.invokeSaveAsDialog(recorder.getBlob());
+			RecordRTC.invokeSaveAsDialog(recorder.getBlob(), 'sample.mp4');
 			recorder.destroy();
 			recorder = null;
 		}
