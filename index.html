@@ -125,7 +125,9 @@
 			$('.playArea').html('');
 			$('.playArea').html($('#poemDuo').html());
 			$('.playArea').show();
-			$('.controls').show();
+			$('.controls').show(function() {
+				$(this).style({'display': 'flex'});
+			});
 		});
 
 
@@ -243,10 +245,10 @@
 		}
 
 		function saveRecordingCallback() {
-			convertStreams(recorder.getBlob());
-			//RecordRTC.invokeSaveAsDialog(recorder.getBlob(), 'sample.mp4');
-			//recorder.destroy();
-			//recorder = null;
+			//convertStreams(recorder.getBlob());
+			RecordRTC.invokeSaveAsDialog(recorder.getBlob(), 'sample.mp4');
+			recorder.destroy();
+			recorder = null;
 		}
 
 		function convertStreams(videoBlob) {
@@ -349,6 +351,7 @@
 
 				recorder = RecordRTC(camera, {
 					type: 'video',
+
 					videoMimeType: 'video/webm;codecs=H264'
 				});
 
