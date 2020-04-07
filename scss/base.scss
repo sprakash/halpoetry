@@ -69,6 +69,15 @@ $base-fontColor: whitesmoke;
 				width: 25%;
 		}
 		
+		.poemNow {
+			display: flex;
+			flex-direction: row;
+		}
+
+		.poemVisual {
+			display: flex;
+			flex-direction: column;
+		}
 		.poemText {
 			  height: 250px;
     overflow-y: scroll;
