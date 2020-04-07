@@ -63,7 +63,8 @@ button {
 
 .poemReadStop {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  justify-content: space-evenly; }
 
 .poemText {
   height: 250px;
@@ -91,7 +92,7 @@ button {
   color: whitesmoke; }
   .controls-active {
     display: flex !important;
-    flex-direction: column; }
+    flex-direction: row; }
 
 #stopRecord {
   visibility: hidden; }

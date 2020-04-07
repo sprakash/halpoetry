@@ -82,6 +82,7 @@ $base-fontColor: whitesmoke;
 		.poemReadStop {
 			display: flex;
 			flex-direction: column;
+			justify-content: space-evenly;
 		}
 		.poemText {
 			  height: 250px;
@@ -115,7 +116,7 @@ $base-fontColor: whitesmoke;
 
 				&-active {
 					display: flex !important;
-					flex-direction: column;
+					flex-direction: row;
 				}
 		}
 
