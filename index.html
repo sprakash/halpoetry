@@ -240,12 +240,12 @@
 			video.src = URL.createObjectURL(recorder.getBlob());
 
 			recorder.camera.stop();
-			recorder.destroy();
-			recorder = null;
 		}
 
 		function saveRecordingCallback() {
 			RecordRTC.invokeSaveAsDialog(recorder.getBlob());
+			recorder.destroy();
+			recorder = null;
 		}
 
 		var recorder; // globally accessible
