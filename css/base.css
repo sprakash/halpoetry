@@ -20,7 +20,7 @@ h1 {
 
 h2 {
   font-size: 1.5em;
-  padding: 0 1em; }
+  padding: 0; }
 
 ul {
   padding: 0;
@@ -43,7 +43,8 @@ button {
   border-radius: 5px;
   font-family: MONOSPACE;
   font-weight: bolder;
-  color: steelblue; }
+  color: steelblue;
+  width: 75%; }
 
 video {
   width: 100%; }
@@ -68,13 +69,13 @@ video {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 100%; }
+  width: 40%; }
 
 .poemText {
   height: 250px;
   overflow-y: scroll; }
   .poemText div {
-    padding: 0 1.5em; }
+    padding: 0 1em 0 0; }
 
 #poem-action {
   display: flex;
