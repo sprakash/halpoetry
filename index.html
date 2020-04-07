@@ -262,7 +262,9 @@
 				video.srcObject = camera;
 
 				recorder = RecordRTC(camera, {
-					type: 'video'
+					type: 'video',
+					mimeType: 'video/mp4',
+					videoMimeType: 'video/webm;codecs=H264'
 				});
 
 				recorder.startRecording();
