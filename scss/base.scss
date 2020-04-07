@@ -5,7 +5,7 @@ $base-fontColor: whitesmoke;
 
 	@font-face {
    font-family: halFont;
-  src: url(font/teko/Teko-Light.ttf);
+  src: url(../font/teko/Teko-Light.ttf) format('truetype'); 
  }
 
 		body {
@@ -101,6 +101,7 @@ $base-fontColor: whitesmoke;
 
 				&-active {
 					display: flex !important;
+					flex-direction: column;
 				}
 		}
 

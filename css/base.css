@@ -1,14 +1,12 @@
 @font-face {
   font-family: halFont;
-  src: url(../font/teko/Teko-Light.ttf) format('truetype'); 
-}
+  src: url(../font/teko/Teko-Light.ttf) format("truetype"); }
 
 body {
   font-family: halFont;
   font-size: 12px;
   background-color: black;
-  color: whitesmoke; 
-}
+  color: whitesmoke; }
 
 nav {
   font-size: 4em;
@@ -80,7 +78,8 @@ button {
   padding: 1em 0;
   color: whitesmoke; }
   .controls-active {
-    display: flex !important; }
+    display: flex !important;
+    flex-direction: column; }
 
 #stopRecord {
   visibility: hidden; }
