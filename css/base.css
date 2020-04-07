@@ -61,6 +61,10 @@ button {
   display: flex;
   flex-direction: column; }
 
+.poemReadStop {
+  display: flex;
+  flex-direction: column; }
+
 .poemText {
   height: 250px;
   overflow-y: scroll; }
