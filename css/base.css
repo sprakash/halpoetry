@@ -65,7 +65,7 @@ video {
   display: flex;
   flex-direction: column; }
 
-.poemReadStop {
+#poemReadStop {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

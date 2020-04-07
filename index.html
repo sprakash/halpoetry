@@ -72,7 +72,7 @@
 									<span id="recordIcon"></span>
 								</div>
 								<section class="controls">
-									<section class="poemReadStop">
+									<section id="poemReadStop">
 										<button id="btn-start-recording">Read Poem</button>
 										<button id="btn-stop-recording">Stop</button>
 									</section>
@@ -242,7 +242,7 @@
 
 		document.getElementById('btn-start-recording').onclick = function() {
 
-			document.querySelector('.peomReadStop').style.width = "100%";
+			document.getElementById('#peomReadStop').style.width = "100%";
 
 			this.disabled = true; 
 			captureCamera(function(camera){
