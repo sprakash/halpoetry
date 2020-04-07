@@ -241,6 +241,8 @@
 			recorder.camera.stop();
 			recorder.destroy();
 			recorder = null;
+
+			RecordRTC.invokeSaveAsDialog(recorder.getBlob());
 		}
 
 		var recorder; // globally accessible
