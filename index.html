@@ -4,6 +4,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/base.css">
 	<link rel="shortcut icon" type="image/x-icon" href="https://images.squarespace-cdn.com/content/v1/5e0a34dda233092a4bcdb62f/1578251769701-21NUJB855AA5EQPXPL1U/ke17ZwdGBToddI8pDm48kIqYQBNNprSYxhcypmJOB3tZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpx7py1hkY9D8kyy_rCbqTOqmLWwvityEzlBjAV-5jO2XJ5hIGGQLjB1zseI90eovdQ/favicon.ico?format=100w">
+	<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.6.0/dist/ffmpeg.min.js"></script>
 	<script src="js/RecordRTC.min.js"></script>
 	<title>Real Hal's poetry</title>
 </head>
@@ -78,6 +79,8 @@
 										<button id="btn-start-recording">Read Poem</button>
 										<button id="btn-stop-recording">Stop Recording</button>
 										<button id="btn-save-recording">Save Recording</button>
+
+										<div id="message"></div>
 									</section>
 
 									<section>
@@ -221,17 +224,6 @@
 
 		function captureCamera(callback) {
 			navigator.getWebcam = (navigator.getUserMedia || navigator.webKitGetUserMedia || navigator.moxGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.mediaDevices.getUserMedia);
-
-
-			// navigator.getWebcam({audio: true, video: true}).then(function(camera){
-			// 	callback(camera);
-			// }).catch(function(error) {
-			// 	alert('Unable to capture your camera. Please make sure you are running this on the Chrome browser');
-			// 		console.error(error);
-			// });
-
-			// navigator.getUserMedia({audio:true, video:true}, function(camera){callback(camera)},function (){console.warn("Error getting audio stream from getUserMedia")} );
-
 			navigator.getUserMedia({audio:true, video:true}, function(camera){callback(camera)},function (){console.warn("Error getting audio stream from getUserMedia")} );
 		}
 
@@ -245,97 +237,11 @@
 		}
 
 		function saveRecordingCallback() {
-			//convertStreams(recorder.getBlob());
-			RecordRTC.invokeSaveAsDialog(recorder.getBlob(), 'sample.mp4');
+			RecordRTC.invokeSaveAsDialog(recorder.getBlob(), 'yoursession.webm');
 			recorder.destroy();
 			recorder = null;
 		}
 
-		function convertStreams(videoBlob) {
-			var aab;
-			var buffersReady;
-			var workerReader;
-			var posted; 
-
-			var fileReader = new FileReader();
-			fileReader.onload = function() {
-				abb = this.result;
-				postMessage();
-			};
-
-			if(!worker) {
-				worker = processInWebWorker();
-			}
-
-			worker.onmessage = function(event) {
-				var message = event.data;
-				if(message.type == "ready") {
-					 workerReady = true;
-                            if (buffersReady)
-                                postMessage();
-                        } else if (message.type == "stdout") {
-                            console.log(message.data);
-                        } else if (message.type == "start") {
-                            console.log('<a href="'+ workerPath +'" download="ffmpeg-asm.js">ffmpeg-asm.js</a> file received ffmpeg command.');
-                        } else if (message.type == "done") {
-                            console.log(JSON.stringify(message));
-
-                            var result = message.data[0];
-                            console.log(JSON.stringify(result));
-
-                            var blob = new File([result.data], 'test.mp4', {
-                                type: 'video/mp4'
-                            });
-
-                            console.log(JSON.stringify(blob));
-
-                            var video = document.createElement('video');
-		                    video.controls = true;
-
-		                    var source = document.createElement('source');
-		                    source.src = URL.createObjectURL(blob);
-		                    source.type = 'video/mp4; codecs=mpeg4';
-		                    video.appendChild(source);
-
-		                    video.download = 'YourSession.mp4';
-
-		                     var h2 = document.createElement('h2');
-                    h2.innerHTML = '<a href="' + source.src + '" target="_blank" download="YourSession.mp4" style="font-size:200%;color:red;">Download Converted mp4 and play in VLC player!</a>';
-                
-                        }
-                    };
-
-                    var postMessage = function() {
-                        posted = true;
-
-                        worker.postMessage({
-                            type: 'command',
-                            arguments: '-i video.webm -c:v mpeg4 -b:v 6400k -strict experimental output.mp4'.split(' '),
-                            files: [
-                                {
-                                    data: new Uint8Array(aab),
-                                    name: 'video.webm'
-                                }
-                            ]
-                        });
-                    };
-		}
-
-		  function processInWebWorker() {
-                    var blob = URL.createObjectURL(new Blob(['importScripts("' + workerPath + '");var now = Date.now;function print(text) {postMessage({"type" : "stdout","data" : text});};onmessage = function(event) {var message = event.data;if (message.type === "command") {var Module = {print: print,printErr: print,files: message.files || [],arguments: message.arguments || [],TOTAL_MEMORY: message.TOTAL_MEMORY || false};postMessage({"type" : "start","data" : Module.arguments.join(" ")});postMessage({"type" : "stdout","data" : "Received command: " +Module.arguments.join(" ") +((Module.TOTAL_MEMORY) ? ".  Processing with " + Module.TOTAL_MEMORY + " bits." : "")});var time = now();var result = ffmpeg_run(Module);var totalTime = now() - time;postMessage({"type" : "stdout","data" : "Finished processing (took " + totalTime + "ms)"});postMessage({"type" : "done","data" : result,"time" : totalTime});}};postMessage({"type" : "ready"});'], {
-                        type: 'application/javascript'
-                    }));
-
-                    var worker = new Worker(blob);
-                    URL.revokeObjectURL(blob);
-                    return worker;
-                }
-
-		var worker;
-		var workerPath = 'https://archive.org/download/ffmpeg_asm/ffmpeg_asm.js';
-		if(document.domain == 'localhost') {
-           workerPath = location.href.replace(location.href.split('/').pop(), '') + 'ffmpeg_asm.js';
-        }
 		var recorder; // globally accessible
 
 		document.getElementById('btn-start-recording').onclick = function() {
