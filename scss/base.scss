@@ -1,4 +1,4 @@
-$base-font: 12px; 
+$base-font: 10px; 
 $base-bgColor: black;
 $base-fontColor: whitesmoke; 
 
@@ -48,7 +48,7 @@ $base-fontColor: whitesmoke;
 		ul li{
 			text-decoration: underline;
 			cursor: pointer;
-			font-size: 2em;
+			font-size: 3em;
 			text-align: center;
 		}
 
@@ -64,7 +64,7 @@ $base-fontColor: whitesmoke;
 		    border-radius: 5px;
 		    font-family: MONOSPACE;
     	 font-weight: bolder;
-    	 color: steelblue;
+    	 color: #ed0a7e;
     	 width: 75%;
     	     margin: .5em auto;
 		}
@@ -201,28 +201,52 @@ $base-fontColor: whitesmoke;
 
 		.borderism {
 			border-style: solid;
-   border-width: thin;
-   border-color: #27729699;
-		}
-
-		@media (max-width: 890px) {
-			
-			li {
-				margin-left: 0;
-			}
-
-			.playArea,
-			nav {
-				text-align: center;
-			}
-
-		   .playArea,
-		   .controls {
-				width: 80%;
-		   }
-		   
+   			border-width: thin;
+   			border-color: #27729699;
 		}
 
 #btn-save-recording {
 	visibility : hidden;
 }
+
+	@media (max-width: 1023px) {
+
+		#poem {
+
+			&Now {
+				flex-direction: column;
+			}
+
+			&Visual {
+				margin: 0 6em;
+			}
+
+			&-action h1 {
+				font-size: 2.5em !important;
+			}
+		}	
+		
+		.controls {
+			flex-direction: column;
+		}
+
+		ul li {
+			font-size: 2em;
+		}
+	}
+
+
+	@media (max-width: 500px) {
+
+		#poem {
+
+			&-action h1 {
+				font-size: 1.5em !important;
+			}
+		}	
+		
+		ul li {
+			font-size: 1em;
+		}
+
+	}

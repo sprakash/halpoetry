@@ -161,6 +161,8 @@
 				//click on a poem title. 
 				$('.poemEach').on('touchend click', function(e) {
 
+					$('h1').hide();
+
 					$('.playArea').html('');
 
 					var poemTitle = $(this).text();

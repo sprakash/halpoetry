@@ -4,7 +4,7 @@
 
 body {
   font-family: halFont;
-  font-size: 12px;
+  font-size: 10px;
   background-color: black;
   color: whitesmoke; }
 
@@ -35,7 +35,7 @@ ul {
 ul li {
   text-decoration: underline;
   cursor: pointer;
-  font-size: 2em;
+  font-size: 3em;
   text-align: center; }
 
 li {
@@ -49,7 +49,7 @@ button {
   border-radius: 5px;
   font-family: MONOSPACE;
   font-weight: bolder;
-  color: steelblue;
+  color: #ed0a7e;
   width: 75%;
   margin: .5em auto; }
 
@@ -154,15 +154,23 @@ video {
   border-width: thin;
   border-color: #27729699; }
 
-@media (max-width: 890px) {
-  li {
-    margin-left: 0; }
-  .playArea,
-  nav {
-    text-align: center; }
-  .playArea,
-  .controls {
-    width: 80%; } }
-
 #btn-save-recording {
   visibility: hidden; }
+
+@media (max-width: 1023px) {
+  #poemNow {
+    flex-direction: column; }
+  #poemVisual {
+    margin: 0 6em; }
+  #poem-action h1 {
+    font-size: 2.5em !important; }
+  .controls {
+    flex-direction: column; }
+  ul li {
+    font-size: 2em; } }
+
+@media (max-width: 500px) {
+  #poem-action h1 {
+    font-size: 1.5em !important; }
+  ul li {
+    font-size: 1em; } }
