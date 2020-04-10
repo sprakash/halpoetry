@@ -1,0 +1,19 @@
+{
+
+	"Poems" : [
+
+		{
+			"id" : "crumbs",
+			"title" : "Crumbs",
+			"text" : "Don’t eat any more food in your room,\nMother said. You’ll get more bugs.\nThey depend on people like you.\nOtherwise, they would starve.\nBut who do you want to make happy,\nyour mother or a bunch of ants?\nWhat have they done for you?\nNothing. They have no feelings.\n\nThey’ll eat your candy.\nYet you treat them better than you treat me.\nYou keep feeding them.\nBut you never offer me anything."
+		}, 
+		{
+			"id" : "newWords",
+			"title" : "Learning New Words",
+			"text" : "My Parkinson’s medicine makes\nmy arms shake. The medical\nterm is dyskinesia. That’s\none of the benefits of the disease\nyou learn new words. You\n\nalso learn new meanings for\nold words. When I say my\nwindows are wide open,\nI’m not referring to the computer\nor those in a house. It means\nmy medication is working.\nA half closed window means\nthe medicine is wearing down.\nA closed window means everything\nI do will now become a struggle."
+		}
+
+
+	]
+	
+}
