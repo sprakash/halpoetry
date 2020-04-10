@@ -16,6 +16,9 @@ main {
   display: flex;
   flex-direction: column; }
 
+a {
+  color: inherit; }
+
 hr {
   border-top: 1px solid #00b2ff29; }
 
@@ -51,7 +54,8 @@ button {
   font-weight: bolder;
   color: #ed0a7e;
   width: 75%;
-  margin: .5em auto; }
+  margin: .5em auto;
+  visibility: hidden; }
 
 video {
   width: 100%; }

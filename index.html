@@ -29,7 +29,8 @@
 								</div>
 								<section class="controls">
 									<section id="poemReadStop">
-										<button id="btn-start-recording">Read Poem</button>
+										<button id="btn-read-poem-only">Read Poem</button>
+										<button id="btn-start-recording">Record Poem</button>
 										<button id="btn-stop-recording">Stop Recording</button>
 										<button id="btn-save-recording">Save Recording</button>
 
@@ -99,6 +100,7 @@
 		function fadeInControls() {
 			TweenLite.fromTo($controls, 2.3, from, to);
 		}
+
 	/********************************************************************/
 
 	 /**JSON treatment*/
@@ -128,9 +130,11 @@
 
 				 	var poemlines = val.text.replace(/\n/g, "<br />");
 					
-					$('.poem-titles').append("<li><div class='poemEach' id="+val.id+">"+val.title+"</div></li>");
+					$('.poem-titles').append("<li><a class='poemEach' id="+val.id+" href='javascript:void(0);'>"+val.title+"</a></li>");
 					$('.poems').append("<div id="+val.id+"Full class='poem'><h2>"+val.title+"</h2><div class='poemTxt'>"+poemlines+"</div>");
 				  });
+
+				  $('.poemEach').on('click touchend', eachpoemclick);
 				});
 		 		
 				// $('.poem-titles li').on('touchend click', function(e) {
@@ -156,13 +160,12 @@
 			$(document).ready(function(){
 				fadeInInstruction();
 				fadeUpInstruction();
-	
+			});
 
 				//click on a poem title. 
-				$('.poemEach').on('touchend click', function(e) {
+				function eachpoemclick() {
 
 					$('h1').hide();
-
 					$('.playArea').html('');
 
 					var poemTitle = $(this).text();
@@ -181,9 +184,10 @@
 					
 					fadeInFullPoem();
 					fadeInControls();
-				});
 
-			});
+					document.querySelector('#btn-read-poem-only').style.visibility = "visible";
+
+				}
 
 
 
@@ -261,8 +265,7 @@
 									wavesurfer.microphone.start();
 									$('#waveform').removeClass();
 									$('#waveform').addClass('borderism');
-									$("#btn-start-recording").css({'visibility':'hidden'});
-									$('#btn-stop-recording').css({'visibility':'visible'});
+									
 
 								// } else {
 								// 	wavesurfer.microphone.start();
@@ -309,14 +312,33 @@
 
 		var recorder; // globally accessible
 
-		document.getElementById('btn-start-recording').onclick = function() {
+		document.getElementById('btn-read-poem-only').onclick = function() {
+			
+			document.getElementById('poemReadStop').style.width = '100%';
+			document.getElementById('btn-save-recording').style.visibility = 'hidden';
+			document.getElementById('btn-start-recording').style.visibility = 'visible';
+			document.getElementById('btn-stop-recording').style.visibility = 'hidden';
 
+
+			captureCamera(function(camera){
+				video.muted = true;
+				video.volume = 0;
+				video.srcObject = camera;
+		
+			
+				document.getElementById('btn-stop-recording').disabled = true;
+			});
+
+			makeWaves();
+		};
+
+		document.getElementById('btn-start-recording').onclick = function() {
 			document.getElementById('poemReadStop').style.width = '100%';
 			document.getElementById('btn-save-recording').style.visibility = 'hidden';
 
 			this.disabled = true; 
 			captureCamera(function(camera){
-				video.muted = true;
+				video.muted = false;
 				video.volume = 0;
 				video.srcObject = camera;
 
@@ -329,8 +351,10 @@
 				recorder.startRecording();
 				recorder.camera = camera;
 				document.getElementById('btn-stop-recording').disabled = false;
+				$("#btn-start-recording").css({'visibility':'hidden'});
+				$("#btn-stop-recording").css({'visibility':'visible'});
 			});
-
+									
 			makeWaves();
 		};
 
