@@ -167,7 +167,9 @@ video {
   .controls {
     flex-direction: column; }
   ul li {
-    font-size: 2em; } }
+    font-size: 2em; }
+  .logo img {
+    width: 5%; } }
 
 @media (max-width: 500px) {
   #poem-action h1 {
