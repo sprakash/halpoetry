@@ -12,6 +12,10 @@ nav {
   font-size: 4em;
   float: right; }
 
+main {
+  display: flex;
+  flex-direction: column; }
+
 hr {
   border-top: 1px solid #00b2ff29; }
 
@@ -31,7 +35,8 @@ ul {
 ul li {
   text-decoration: underline;
   cursor: pointer;
-  font-size: 2em; }
+  font-size: 2em;
+  text-align: center; }
 
 li {
   margin-bottom: 1em;
@@ -45,24 +50,26 @@ button {
   font-family: MONOSPACE;
   font-weight: bolder;
   color: steelblue;
-  width: 75%; }
+  width: 75%;
+  margin: .5em auto; }
 
 video {
   width: 100%; }
 
+.logo {
+  display: flex;
+  flex-direction: row-reverse;
+  z-index: -2; }
+  .logo img {
+    max-width: 15%; }
+
 #content {
   padding-top: 1em;
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  justify-content: space-between; }
 
-.poem-titles {
-  width: 25%; }
-
-.poemNow {
-  display: flex;
-  flex-direction: row; }
-
-.poemVisual {
+#poem-area {
   display: flex;
   flex-direction: column; }
 
@@ -70,51 +77,74 @@ video {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 40%; }
-
-.poemText {
-  height: 150px;
-  overflow-y: scroll; }
-  .poemText div {
-    padding: 0 1em 0 0; }
+  width: 100%; }
 
 #poem-action {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   width: 75%; }
+  #poem-action h1 {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    letter-spacing: .125em;
+    text-transform: capitalize;
+    font-size: 4em;
+    word-spacing: .25em;
+    opacity: 0; }
+
+#poemNow {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-between; }
 
 .poems {
   display: none; }
+  .poems h2 {
+    margin-top: 2em; }
 
-.poems h2 {
-  margin-top: 2em; }
+.poemFullContent {
+  height: 230px;
+  overflow-y: scroll;
+  font-size: 1em;
+  margin-top: 1.23em;
+  padding-right: 1em; }
+
+.poemFullTitle {
+  font-size: 2.3em;
+  padding-top: .5em; }
+
+.poemVisual {
+  display: flex;
+  flex-direction: column; }
 
 .controls {
-  display: none;
-  width: 60%;
+  opacity: 0;
+  width: 100%;
   justify-content: space-between;
   padding: 1em 0;
-  color: whitesmoke; }
-  .controls-active {
-    display: flex !important;
-    flex-direction: row;
-    justify-content: space-between; }
+  color: whitesmoke;
+  display: flex !important;
+  flex-direction: column-reverse;
+  justify-content: space-between; }
 
 #stopRecord {
   visibility: hidden; }
 
 .playArea {
   padding: 0 0 2em 0;
-  width: 50%;
   text-align: justify;
   margin: 0 2em;
   font-size: 2.5em;
   line-height: 1.8em;
-  letter-spacing: .025em; }
+  letter-spacing: .025em;
+  opacity: 0;
+  flex-direction: column;
+  justify-content: space-between; }
 
 #waveform {
-  width: 60%;
+  width: 100%;
   display: block;
   background-color: black;
   height: 130px; }

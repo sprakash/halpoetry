@@ -16,9 +16,15 @@ $base-fontColor: whitesmoke;
 		}
 
 		nav {
-			  font-size: 4em;
-    	float: right;
+			font-size: 4em;
+    		float: right;
 		}
+
+		main {
+			display: flex;
+			flex-direction: column;
+		}
+
 		hr {
 			border-top: 1px solid #00b2ff29;
 		}
@@ -43,6 +49,7 @@ $base-fontColor: whitesmoke;
 			text-decoration: underline;
 			cursor: pointer;
 			font-size: 2em;
+			text-align: center;
 		}
 
 		li {
@@ -59,74 +66,114 @@ $base-fontColor: whitesmoke;
     	 font-weight: bolder;
     	 color: steelblue;
     	 width: 75%;
+    	     margin: .5em auto;
 		}
 
 		video {
 			width: 100%;
 		}
 
+		.logo {
+			display: flex;
+    		flex-direction: row-reverse;
+    		z-index: -2;
+
+			img {
+				 max-width: 15%;
+			}
+		}
+
 		#content {
 			padding-top: 1em;
 			display: flex;
 			flex-direction: row;
+			justify-content: space-between;
 		}
 
-		.poem-titles {
-				width: 25%;
+		#poem {
+
+			&-area {
+				display: flex;
+				flex-direction: column;
+			}
+
+
+			&ReadStop { 
+				display: flex;
+				flex-direction: column;
+				justify-content: space-evenly;
+				width: 100%;
+			}
+
+			&-action {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-evenly;
+				width: 75%;
+
+				h1 {
+					    padding: 0;
+					    margin: 0;
+					    text-align: center;
+					    letter-spacing: .125em;
+					    text-transform: capitalize;
+					    font-size: 4em;
+					    word-spacing: .25em;
+					    opacity: 0;
+				}
+			}
+
+			&Now {
+				display: flex !important;
+				flex-direction: row;
+				justify-content: space-between;
+			}
+
 		}
+
+		.poem {
+
+			&s {
+
+				display: none;
+
+				h2 {
+					margin-top: 2em;
+				}
+
+			}
+
+			&FullContent {
+				    height: 230px;
+				    overflow-y: scroll;
+				    font-size: 1em;
+				    margin-top: 1.23em;
+				    padding-right: 1em;
+			}
+
+			&FullTitle{
+				font-size: 2.3em;
+				padding-top: .5em;
+			}
+
+			&Visual {
+				display: flex;
+				flex-direction: column;
+			}
+
+			
+		}
+
 		
-		.poemNow {
-			display: flex;
-			flex-direction: row;
-		}
-
-		.poemVisual {
-			display: flex;
-			flex-direction: column;
-		}
-
-		#poemReadStop {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-evenly;
-			width: 40%;
-
-		}
-		.poemText {
-			  height: 150px;
-    overflow-y: scroll;
-
-     div {
-     	padding: 0 1em 0 0;
-     }
-		}
-
-		#poem-action {
-			display: flex;
-			flex-direction: column;
-			justify-content: space-evenly;
-			width: 75%;
-		}
-		.poems {
-			display: none;
-		}
-	
-		.poems h2 {
-			margin-top: 2em;
-		}
-
 		.controls {
-			display: none;
-			width: 60%;
+			opacity: 0;
+			width: 100%;
 			justify-content: space-between;
 			padding: 1em 0;
 			color: whitesmoke;
-
-				&-active {
-					display: flex !important;
-					flex-direction: row;
-					justify-content: space-between;
-				}
+			display: flex !important;
+			flex-direction: column-reverse;
+			justify-content: space-between;
 		}
 
 		#stopRecord {
@@ -135,16 +182,18 @@ $base-fontColor: whitesmoke;
 
 		.playArea {
 			padding: 0 0 2em 0;
-			width: 50%;
 		 text-align: justify;
 		 margin: 0 2em;
 		 font-size: 2.5em;
 		 line-height: 1.8em;
 		 letter-spacing: .025em;
+		 opacity: 0;
+		 	flex-direction: column;
+		 	justify-content: space-between;
 		}
 
 		#waveform {
-			width: 60%;
+			width: 100%;
 			display: block;
 			background-color: black;
 			height: 130px;

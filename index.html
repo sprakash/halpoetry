@@ -11,62 +11,15 @@
 <body>
 	<main>
 		<nav>
-			<span>hal</span>
+			<span class="logo"><img src="/assets/colorlogo.png" /></span>
 		</nav>
 		<section id="content">
 				<audio id="myLiveAudio" class="video-js vjs-default-skin"></audio>
-
-				<section class="poem-titles">
-					<ul>
-						<li><div id="crumbs">Crumbs</div></li>
-						<li><div id="newWords">Learning New Words</div></li>
-					</ul>
+				<section id="poem-area">
+					<ul class="poem-titles"><!--json populates --></ul>
 				</section>
 				<section id="poem-action">
-					<section class="poems">
-						<div id="poemUno" class="poem">
-							<h2>Crumbs</h2>
-							<div class="poemText">
-							<div>Don’t eat any more food in your room,
-							Mother said. You’ll get more bugs.
-							They depend on people like you.
-							Otherwise, they would starve.
-							But who do you want to make happy,
-							your mother or a bunch of ants?
-							What have they done for you?
-							Nothing. They have no feelings.</div>
-
-							<div>They’ll eat your candy. Yet
-							you treat them better than you treat me.
-							You keep feeding them.
-							But you never offer me anything.</div>
-						  </div>
-						</div>
-						<div id="poemDuo" class="poem">
-							<h2>Learning New Words</h2>
-							<div class="poemText">
-							<div>My Parkinson’s medicine makes
-							my arms shake. The medical
-							term is dyskinesia. That’s
-							one of the benefits of the disease</div>
-							<div>–</div>
-							<div>you learn new words. You
-							also learn new meanings for
-							old words. When I say my
-							windows are wide open,
-							I’m not referring to the computer
-							or those in a house. It means
-							my medication is working.
-							A half closed window means
-							the medicine is wearing down.
-							A closed window means everything
-							I do will now become a struggle.</div>
-
-							<div>I just pray the window won’t get stuck.</div>
-						 </div>
-						</div>
-					</section>
-					<section>
+					<h1>&larr; Pick one of Hal's poems to read.</h1>
 						<div id="poemNow">
 							<div class="playArea">
 							</div>
@@ -97,10 +50,9 @@
 							</section>
 							
 						</div>
-					</section>
 				</section>
 
-				
+				<section class="poems"><!--json populates --></section>
 
 				<div style="margin-top: 10px;" id="recording-player"></div>
 
@@ -109,34 +61,136 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/wavesurfer.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
 <script src="js/wavesurfer.js"></script>
 
  <script type="text/javascript">
 
- 		
- 		var video= document.querySelector('video');
-		$('#crumbs').on('touchend click', function(e) {
-			$('.playArea').html('');
-			$('.playArea').html($('#poemUno').html());
-			$('.playArea').show();
-			$('.controls').show(function(){
-				$(this).removeClass('controls-active');
-				$(this).addClass('controls-active');
+ 	/** BASIC app utility functions
+	*/
+	 	const $el = document.querySelector('#poem-action h1');
+	 	const $playAnim = document.querySelector('.playArea');
+	 	const $controls = document.querySelector('.controls');
+
+		const duration = 2.3;
+		const from = { opacity: 0, ease: Linear.ease };
+		const to = { opacity: 1 };
+
+		var video= document.querySelector('video');
+
+
+		function fadeInInstruction() {
+		   TweenLite.fromTo($el, duration, from, to);
+		}
+
+		function fadeOutInstruction() {
+			TweenLite.fromTo($el, 1.3, {opacity: 0}, {opacity: 0});
+		}
+
+		function fadeInFullPoem() {
+			TweenLite.fromTo($playAnim, 5 , from, to);
+		}
+
+		function fadeUpInstruction() {
+			new TweenMax($el, 2, { y: 200 });
+			new TweenMax($el, 2, { y: 0, top: 50, delay: 2.3 });
+		}
+
+		function fadeInControls() {
+			TweenLite.fromTo($controls, 2.3, from, to);
+		}
+	/********************************************************************/
+
+	 /**JSON treatment*/
+
+	 /**
+	 	TITLES
+	 	for ul : poem-titles class append :
+	 	each li is id from json for div in li.
+	 	title is the div text. 
+
+
+	 	FULL TEXT 
+		for section : poems append : 
+		id from json file id with class 'poem'
+		idFull with class poem.
+		h2 with Full name.
+		div with class poemText. 
+		divs with each \n\n
+							-
+							
+	 	*/
+
+		 	$.getJSON( "/assets/json/poems.json", function( data ) {
+
+				 
+				 $.each( data.Poems, function( key, val ) {
+
+				 	var poemlines = val.text.replace(/\n/g, "<br />");
+					
+					$('.poem-titles').append("<li><div class='poemEach' id="+val.id+">"+val.title+"</div></li>");
+					$('.poems').append("<div id="+val.id+"Full class='poem'><h2>"+val.title+"</h2><div class='poemTxt'>"+poemlines+"</div>");
+				  });
+				});
+		 		
+				// $('.poem-titles li').on('touchend click', function(e) {
+				// 	$('.playArea').html('');
+				// 	var fullPoemId = "#"+$(this).id + 'Full';
+
+				// 	console.log(fullPoemId);
+
+				// 	$('.playArea').html($(fullPoemId).html());
+				// 	$('.playArea').show();
+				// 	$('.controls').show(function(){
+				// 		$(this).removeClass('controls-active');
+				// 		$(this).addClass('controls-active');
+				// 	});
+				// });
+
+		/**END JSON Poem readings*/
+
+		/********************************************************************/
+
+		/** BEGIN main event listeners*/
+
+			$(document).ready(function(){
+				fadeInInstruction();
+				fadeUpInstruction();
+	
+
+				//click on a poem title. 
+				$('.poemEach').on('touchend click', function(e) {
+
+					$('.playArea').html('');
+
+					var poemTitle = $(this).text();
+					console.log($(this).text() + "clicked title");
+
+					//fadeout 'pick one of ...'
+					fadeOutInstruction();
+
+					var foundPoemTEXT = "#"+this.id+"Full";
+
+					console.log($(foundPoemTEXT+" > .poemTxt").html());
+
+					$('.playArea').append("<div class='poemFullTitle'></div><div class='poemFullContent'></div>");
+					$('.poemFullContent').html($(foundPoemTEXT+" > .poemTxt").html());
+					$('.poemFullTitle').html(poemTitle);
+					
+					fadeInFullPoem();
+					fadeInControls();
+				});
+
 			});
-		});
-		$('#newWords').on('touchend click',function(e) {
-			$('.playArea').html('');
-			$('.playArea').html($('#poemDuo').html());
-			$('.playArea').show();
-			$('.controls').show(function() {
-				$(this).style({'display': 'flex'});
-			});
-		});
 
 
 
-		// // start the microphone
-		// wavesurfer.microphone.start();
+		/**END main event listeners*/
+
+		/********************************************************************/
+
+		/** BEGIN wavesurfer 
+		*/
 
 		var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 		var wavesurfer, context, processor;
@@ -161,7 +215,7 @@
 
 					            // if (wavesurfer === undefined) {
 
-					            	 var colors = ['magenta', 'yellow', 'coral', 'deepskyblue', 'silver', 'gold', 'seagreen', 'white', 'aliceblue'];
+					            	 var colors = ['#4aa3ab', '#c3c746', '#de3a57', 'deepskyblue', '#ef0a7f', 'silver', 'seagreen', 'white', 'aliceblue'];
 									 var freq = [1, 0];
 
 									  // Grab a random color from the array.
@@ -221,6 +275,15 @@
 				$('#btn-stop-recording').css({'visibility':'hidden'});
 				//$('#waveform').removeClass('borderism');
 		}
+
+		/**
+		END wavesurfer method declarations.
+		*/
+
+
+		/**
+		BEGIN video capture.
+		*/
 
 		function captureCamera(callback) {
 			navigator.getWebcam = (navigator.getUserMedia || navigator.webKitGetUserMedia || navigator.moxGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.mediaDevices.getUserMedia);
@@ -282,6 +345,10 @@
 		document.getElementById('btn-save-recording').onclick = function() {
 			saveRecordingCallback();
 		};
+
+		/**
+		END with save recording
+		*/
 
 	</script>
 
