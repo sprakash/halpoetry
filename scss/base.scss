@@ -63,15 +63,15 @@ $base-fontColor: whitesmoke;
 		}
 
 		button {
-			font-size: 1.5em;
+			font-size: .85em;
 		    letter-spacing: .25em;
-		    border-radius: 5px;
+		    border-radius: 10px;
 		    font-family: MONOSPACE;
-    	 	font-weight: bolder;
-    	 	color: #ed0a7e;
-    	 	width: 75%;
-    	    margin: .5em auto;
-    	    visibility: hidden;
+		    font-weight: bolder;
+		    color: #ed0a7e;
+		    width: 75%;
+		    margin-top: 1em;
+		    visibility: hidden;
 		}
 
 		video {
@@ -159,6 +159,7 @@ $base-fontColor: whitesmoke;
 			&FullTitle{
 				font-size: 2.3em;
 				padding-top: .5em;
+				color: #c3c746;
 			}
 
 			&Visual {
@@ -262,3 +263,82 @@ $base-fontColor: whitesmoke;
 		}
 
 	}
+
+.scrollbar
+{
+	margin-left: 30px;
+	float: left;
+	height: 300px;
+	width: 65px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+
+
+/*
+ *  STYLE 4
+ */
+
+#style-4::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: black;
+}
+
+#style-4::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: black;
+}
+
+#style-4::-webkit-scrollbar-thumb
+{
+	background-color: teal;
+	border: 1px solid #555555;
+	border-radius: 8px;
+}
+
+
+.Blink {
+  animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+}
+
+@keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+#record {
+
+	&Area {
+		position: relative;
+		z-index: 0;
+		top: 35px;
+		left: 30px;
+	}
+
+	&Icon {
+		position: relative;
+		z-index: 1;
+	    width: 10px;
+	    height: 10px;
+	    position: relative;
+	    visibility: hidden;
+	}
+
+	&Section {
+		position: absolute;
+	}
+}
+
+.fa {
+	color: red; 
+	width: 10px;
+	font-size: 2.5em !important;
+}
