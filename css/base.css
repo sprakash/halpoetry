@@ -81,7 +81,8 @@ video {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 100%; }
+  width: 100%;
+  padding-top: 1.5em; }
 
 #poem-action {
   display: flex;
@@ -103,26 +104,29 @@ video {
   flex-direction: row;
   justify-content: space-between; }
 
+#poemVisual {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  padding-top: 5em; }
+
 .poems {
   display: none; }
   .poems h2 {
     margin-top: 2em; }
 
 .poemFullContent {
-  height: 230px;
+  height: 320px;
   overflow-y: scroll;
-  font-size: 1em;
+  font-size: 1.5em;
   margin-top: 1.23em;
-  padding-right: 1em; }
+  padding-right: 1em;
+  line-height: 1.85em; }
 
 .poemFullTitle {
   font-size: 2.3em;
   padding-top: .5em;
   color: #c3c746; }
-
-.poemVisual {
-  display: flex;
-  flex-direction: column; }
 
 .controls {
   opacity: 0;
@@ -146,7 +150,8 @@ video {
   letter-spacing: .025em;
   opacity: 0;
   flex-direction: column;
-  justify-content: space-between; }
+  justify-content: space-between;
+  width: 70%; }
 
 #waveform {
   width: 100%;
@@ -202,7 +207,7 @@ video {
   background-color: black; }
 
 #style-4::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
   background-color: black; }
 
 #style-4::-webkit-scrollbar-thumb {
