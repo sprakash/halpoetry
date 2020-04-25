@@ -33,6 +33,14 @@
 								</section>
 							</div>
 							<section id="poemVisual">
+								<section>
+									
+
+
+								</section>
+								<section class="poemDbCount">
+									<div id="gimmeDecibels"></div>
+								</section>
 								<div id="waveform">
 								</div>
 								<section class="controls">
@@ -141,19 +149,6 @@
 				  $('.poemEach').on('click touchend', eachpoemclick);
 				});
 		 		
-				// $('.poem-titles li').on('touchend click', function(e) {
-				// 	$('.playArea').html('');
-				// 	var fullPoemId = "#"+$(this).id + 'Full';
-
-				// 	console.log(fullPoemId);
-
-				// 	$('.playArea').html($(fullPoemId).html());
-				// 	$('.playArea').show();
-				// 	$('.controls').show(function(){
-				// 		$(this).removeClass('controls-active');
-				// 		$(this).addClass('controls-active');
-				// 	});
-				// });
 
 		/**END JSON Poem readings*/
 
@@ -204,7 +199,10 @@
 		*/
 
 		var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-		var wavesurfer, context, processor;
+		var wavesurfer, context, processor, mediaStreamSource, analyser, aCtx, lyser, micro;
+
+		var dial = document.querySelector('.dial .inner');
+		var gauge = document.querySelector('.gauge .value');
 
 		 var constraints = {
 	         audio: true,
@@ -216,14 +214,18 @@
 			document.getElementById('waveform').innerHTML = '';
 
 				/** BEGIN Waveform */
-					           if (isSafari) {
+					          // if (isSafari) {
 					               
 					                var AudioContext =
 					                    window.AudioContext || window.webkitAudioContext;
 					                context = new AudioContext();
 					                processor = context.createScriptProcessor(1024, 1, 1);
-					            }
+					          //  }
 
+					          	 analyser = context.createAnalyser();
+ 								 analyser.smoothingTimeConstant = 0.3;
+ 								 analyser.fftSize = 1024;
+					            
 					            // if (wavesurfer === undefined) {
 
 					            	 var colors = ['#4aa3ab', '#c3c746', '#de3a57', 'deepskyblue', '#ef0a7f', 'silver', 'seagreen', 'white', 'aliceblue'];
@@ -233,7 +235,6 @@
 				      				 
 				      				 var waveColorPick = colors[Math.floor(Math.random() * colors.length)];
 				      				 var waveFreq = freq[Math.floor(Math.random()* freq.length)];
-
 				      				 var ctx = document.createElement('canvas').getContext('2d');
 				      				 var linGrad = ctx.createLinearGradient(0, 200, 500, 300);
 
@@ -249,8 +250,8 @@
 									  cursorWidth   : 0,
 									  waveColor : linGrad,
 					    			  progressColor : 'purple',
-					    			  minPxPerSec : 23,
-					    			  barWidth : 2,
+					    			  minPxPerSec : 0,
+					    			  barWidth : 8,
 					    			  hideScrollbar	: true,
 					    			  audioContext : context || null,
 					                  audioScriptProcessor : processor || null,
@@ -259,8 +260,38 @@
 									  ]
 									});
 
+
+									wavesurfer.on('ready', function (){
+										console.log("calculate dB");
+									});
+
 					            	wavesurfer.microphone.on('deviceReady', function(stream) {
 								    	console.log('Device ready!', stream);
+
+								    	aCtx = new AudioContext();
+								        lyser = aCtx.createAnalyser();
+								        lyser.minDecibels = -90;
+										lyser.maxDecibels = -10;
+
+								        micro = aCtx.createMediaStreamSource(stream);
+										micro.connect(lyser);
+
+
+								     //    setInterval(function(){
+									    //     FFTData = new Float32Array(lyser.frequencyBinCount);
+									    //     lyser.getFloatFrequencyData(FFTData);
+									    //     console.log(FFTData[0]);
+									    // },10);
+
+									    setInterval(function() { 
+										    var array =  new Uint8Array(lyser.frequencyBinCount);
+	        								lyser.getByteFrequencyData(array);
+	        								var averageVolume = (getAverageVolume(array) < 1 ? 0 : Math.round(getAverageVolume(array)));
+	         								console.log('Average volume in this chunk was: ' + averageVolume); 
+	         								updateMeter(averageVolume);
+         								}, 10);
+								  
+
 									});
 								
 									wavesurfer.microphone.on('deviceError', function(code) {
@@ -286,6 +317,23 @@
 				//$('#waveform').removeClass('borderism');
 		}
 
+		function getAverageVolume( array ) {
+	        var amplitudeSum = 0;
+
+	        for (var i = 0; i < array.length; i++) {
+	            amplitudeSum += array[i];
+	        }
+
+	        return amplitudeSum / array.length;
+  		}
+
+		function updateMeter(dbVal) {
+            var meter = document.getElementById('gimmeDecibels');
+            meter.innerHTML = dbVal;
+        }
+
+       
+	
 		/**
 		END wavesurfer method declarations.
 		*/
@@ -384,6 +432,11 @@
 		/**
 		END with save recording
 		*/
+
+
+		/** BEGIN gauge business */
+
+		/** END gauge business*/
 
 	</script>
 

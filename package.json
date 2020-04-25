@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "canvas-gauges": "^2.1.7",
     "http-server": "^0.12.1",
     "recordrtc": "^5.5.9"
   },

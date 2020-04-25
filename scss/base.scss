@@ -170,6 +170,14 @@ $base-fontColor: whitesmoke;
 				padding-top: .5em;
 				color: #c3c746;
 			}
+
+			&DbCount {
+				display: flex;
+			    flex-direction: column;
+			    justify-content: center;
+			    align-items: center;
+			    font-size: 8em;
+			}
 			
 		}
 
@@ -346,3 +354,5 @@ $base-fontColor: whitesmoke;
 	width: 10px;
 	font-size: 2.5em !important;
 }
+
+/** Dial and meter */
