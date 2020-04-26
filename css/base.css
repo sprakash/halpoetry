@@ -108,7 +108,7 @@ video {
   display: flex;
   flex-direction: column;
   width: 30%;
-  padding-top: 5em; }
+  padding-top: 4em; }
 
 .poems {
   display: none; }
@@ -133,7 +133,13 @@ video {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 8em; }
+  font-size: 7em;
+  position: relative;
+  color: #f3ecee; }
+
+#gimmeDecibels {
+  position: absolute;
+  top: 110px; }
 
 .controls {
   opacity: 0;
@@ -175,10 +181,14 @@ video {
   visibility: hidden; }
 
 @media (max-width: 1023px) {
+  .playArea {
+    padding: 0; }
   #poemNow {
     flex-direction: column; }
   #poemVisual {
-    margin: 0 6em; }
+    margin: 0;
+    padding: 0;
+    width: 70%; }
   #poem-action h1 {
     font-size: 2.5em !important; }
   .controls {

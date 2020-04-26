@@ -139,7 +139,7 @@ $base-fontColor: whitesmoke;
 				display: flex;
 				flex-direction: column;
 				width: 30%;
-				padding-top: 5em;
+				padding-top: 4em;
 			}
 
 		}
@@ -176,9 +176,16 @@ $base-fontColor: whitesmoke;
 			    flex-direction: column;
 			    justify-content: center;
 			    align-items: center;
-			    font-size: 8em;
+			    font-size: 7em;
+			    position: relative;
+			    color: #f3ecee;
 			}
 			
+		}
+
+		#gimmeDecibels {
+			position: absolute;
+    		top: 110px;
 		}
 
 		
@@ -229,6 +236,10 @@ $base-fontColor: whitesmoke;
 
 	@media (max-width: 1023px) {
 
+		.playArea {
+			padding: 0;
+		}
+
 		#poem {
 
 			&Now {
@@ -236,7 +247,9 @@ $base-fontColor: whitesmoke;
 			}
 
 			&Visual {
-				margin: 0 6em;
+				margin: 0;
+				padding: 0;
+				width: 70%;
 			}
 
 			&-action h1 {

@@ -33,12 +33,8 @@
 								</section>
 							</div>
 							<section id="poemVisual">
-								<section>
-									
-
-
-								</section>
 								<section class="poemDbCount">
+									<canvas id="gauge"></canvas>
 									<div id="gimmeDecibels"></div>
 								</section>
 								<div id="waveform">
@@ -76,6 +72,7 @@
 <script src="https://unpkg.com/wavesurfer.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
 <script src="js/wavesurfer.js"></script>
+<script src="js/gauge.min.js"></script>
 
  <script type="text/javascript">
 
@@ -199,7 +196,7 @@
 		*/
 
 		var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-		var wavesurfer, context, processor, mediaStreamSource, analyser, aCtx, lyser, micro;
+		var wavesurfer, context, processor, mediaStreamSource, analyser, aCtx, lyser, micro, gauge;
 
 		var dial = document.querySelector('.dial .inner');
 		var gauge = document.querySelector('.gauge .value');
@@ -289,7 +286,8 @@
 	        								var averageVolume = (getAverageVolume(array) < 1 ? 0 : Math.round(getAverageVolume(array)));
 	         								console.log('Average volume in this chunk was: ' + averageVolume); 
 	         								updateMeter(averageVolume);
-         								}, 10);
+	         								updateGaugeVal(averageVolume);
+         								}, 25);
 								  
 
 									});
@@ -332,11 +330,72 @@
             meter.innerHTML = dbVal;
         }
 
-       
-	
 		/**
 		END wavesurfer method declarations.
 		*/
+
+		/** BEGIN gauge business */
+
+		function makeGauge() {
+
+				gauge = new RadialGauge({
+			    renderTo: 'gauge',
+			    width: 200,
+			    height: 200,
+			    value: 0,
+			    minValue: 0,
+			    startAngle: 90,
+			    ticksAngle: 180,
+			    valueBox: false,
+			    fontNumbersSize: 35,
+			    maxValue: 30,
+			    majorTicks: [
+			        "0",
+			        "10",
+			        "20",
+			        "30"
+			    ],
+			    minorTicks: 2,
+			    strokeTicks: true,
+			    highlights: [
+			    	{
+			          "from": 0,
+			          "to": 10,
+			          "color": "rgba(243,236,238, 1)"
+
+			        },
+			        {
+			          "from": 10,
+			          "to": 20,
+			          "color": "rgba(195,199,70, 1)"
+			        },
+			        {
+			          "from": 20,
+			          "to": 30,
+			          "color": "rgba(239,10,127, 1)"
+			        }
+			    ],
+			    colorPlate: "#000",
+			    colorNeedle: 'rgba(224,103,124,1)',
+			    colorNumbers: '#4daab3',
+			    borderShadowWidth: 0,
+			    borders: false,
+			    needleType: "arrow",
+			    needleWidth: 5,
+			    needleCircleSize: 4,
+			    needleCircleOuter: true,
+			    needleCircleInner: false,
+			    needleStart: 0,
+			    animationDuration: 150,
+			    animationRule: "linear"
+			}).draw();
+		}
+
+		function updateGaugeVal(gVal) {
+			gauge.value = gVal;
+ 		}
+
+		/** END gauge business*/
 
 
 		/**
@@ -383,6 +442,7 @@
 			});
 
 			makeWaves();
+			makeGauge();
 		};
 
 		document.getElementById('btn-start-recording').onclick = function() {
@@ -434,9 +494,7 @@
 		*/
 
 
-		/** BEGIN gauge business */
 
-		/** END gauge business*/
 
 	</script>
 
